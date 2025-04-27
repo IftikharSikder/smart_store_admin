@@ -9,7 +9,7 @@ class MyHomePage extends StatelessWidget {
 
   final devices = RestClient(Dio());
 
-  Future<Device> fetchDevice() async {
+  Future fetchDevice() async {
     final response = await devices.getDevices();
     return Device.fromJson(response);
   }
@@ -22,13 +22,13 @@ class MyHomePage extends StatelessWidget {
         centerTitle: true,
         title: Text("Smart Store Admin", style: TextStyle(color: Colors.white)),
       ),
-      body: FutureBuilder<Device>(
+      body: FutureBuilder(
         future: fetchDevice(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasData) {
-            final products = snapshot.data!.data!;
+            final products = snapshot.data.data;
 
             return ListView.builder(
               itemCount: products.length,
